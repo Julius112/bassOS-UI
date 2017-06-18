@@ -2,8 +2,21 @@
 
 h3 {
 	padding: 0 0 0 15px;
+	font-size: 16px;
 }
 
 h4 {
 	padding: 0 0 0 15px;
+}
+
+.list__item__subtitle {
+	font-size: 12px;
+}
+
+.list {
+	font-size: 14px;
+}
+
+.playing {
+	background-color: #ccc;
 }

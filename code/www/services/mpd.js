@@ -2069,6 +2069,8 @@ MPD.Song = function(client, source){
       * @returns {String} from the song metadata
       */
      me.getTitle = function(){
+	if(source.title === undefined)
+	    return source.artist;
          return source.title;
      };
 
