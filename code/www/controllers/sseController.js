@@ -1,6 +1,6 @@
 //ons.bootstrap('bassOS', ['sse', 'ng-touch']);
 ons.bootstrap('bassOS', ['sse']);
-angular.module('bassOS', ['onsen']);
+angular.module('bassOS', ['onsen', 'MpdService']);
 
 
 angular.module('bassOS').controller("sseCtl", function($scope, $rootScope, $http){
