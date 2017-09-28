@@ -1,28 +1,28 @@
 angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, $http) {
-	//TODO: load list as external JSON
+	//TODO: load list from backend service
 	$rootScope.settings = {"mpd": {"state":false, "active":false}, "bluetooth": {"state":false, "active":false}, "bluetooth_pairable":{"state":false, "active":false}, "airplay":{"state":false, "active":false}, "auto_source":{"state":false, "active":false}};
 
 	$http({
 		method : "GET",
 		url : "/settings"
         }).then(function mySucces(response) {
-		for (var key in response.data)
-			if (response.data.hasOwnProperty(key) && $rootScope.settings.hasOwnProperty(key)) {
-				$rootScope.settings[key].state = response.data[key];
+		for (var i = 0; i < response.data; i++)
+			if ($rootScope.settings.hasOwnProperty(response.data[i].name)) {
+				$rootScope.settings[key].state = response.data[i].status;
 				$rootScope.settings[key].active = true;
+				$rootScope.settings[key].id = response.data[i].id;
 			}
 	}, function myError(response) {
-		for (var key in response.data)
-			if (response.data.hasOwnProperty(key) && $rootScope.settings[i].hasOwnProperty(key))
-				$rootScope.settings[key].active = false;
+		for (var key in $rootScope.settings)
+			$rootScope.settings[key].active = false;
 	});
 
 	$scope.settings_change = function(settings_obj) {
 		setTimeout(function() {
 			$http({
 				method : "PUT",
-				data: {settings_obj},
-				url : "/settings"
+				data: {status: settings_obj.state},
+				url : "/settings/"+settings_obj.id
 			});
 		}, 1);
 	};
@@ -31,7 +31,7 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 		$http({
 			method : "PUT",
 			data: {},
-			url : "/halt"
+			url : "os/shutdown"
 		});
 	};
 
@@ -39,7 +39,7 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 		$http({
 			method : "PUT",
 			data: {},
-			url : "/reboot"
+			url : "os/reboot"
 		});
 	};
 

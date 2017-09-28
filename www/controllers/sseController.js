@@ -1,10 +1,9 @@
-//ons.bootstrap('bassOS', ['sse', 'ng-touch']);
 ons.bootstrap('bassOS', ['sse']);
 angular.module('bassOS', ['onsen', 'MpdService']);
 
 
 angular.module('bassOS').controller("sseCtl", function($scope, $rootScope, $http){
-	//TODO: as external JSON
+	//TODO: load list from backend service
 	var events = {"switch_event" : {"id" : 1}, "settings_event" : {"id" : 2}, "playlist_event" : {"id" : 3}};
 	
 	var switch_event = function (event_data) {
@@ -46,6 +45,6 @@ angular.module('bassOS').controller("sseCtl", function($scope, $rootScope, $http
 		}
 	}
 	
-	var source = new EventSource('/stats');
+	var source = new EventSource(window.location.hostname+':3000/events');
 	source.addEventListener('message', handleCallback, false);
 });
