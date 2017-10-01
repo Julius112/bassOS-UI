@@ -1,7 +1,7 @@
 <ons-page ng-controller="playlistCtl">
 	<h3>Playlist</h3>
 	<ons-list>
-		<ons-list-item modifier="longdivider" ng-repeat="song in playlist" ng-class="{playing: song.getId() == currentSong}">
+		<ons-list-item modifier="longdivider" ng-repeat="song in queue" ng-click="playSong(song.getId())" ng-class="{playing: song.getId() == currentSong}">
 			<div class="left">
 				<ons-input type="checkbox"></ons-input>
 			</div>
@@ -19,7 +19,8 @@
         	        <ons-icon icon="ion-skip-backward"></ons-icon>
         	</div>
         	<div class="center navigation-bar__center">
-        	        <ons-icon icon="ion-play"></ons-icon>
+        	        <ons-icon icon="ion-play" ng-show="!playing"></ons-icon>
+        	        <ons-icon icon="ion-pause" ng-show="playing"></ons-icon>
         	</div>
         	<div class="right navigation-bar__right">
         	        <ons-icon icon="ion-skip-forward"></ons-icon>
