@@ -5,7 +5,7 @@ angular.module('bassOS').controller('switchCtl', function($scope, $rootScope, $h
 
 		$http({
 			method : "GET",
-			url : "/switches"
+			url : "http://"+window.location.hostname+":3000/switches"
           	}).then(function mySucces(response) {
 			for (var i = 0; i < response.data.length; i++)
 				for (var j = 0; j < $rootScope.switch_array.length; j++)
@@ -23,7 +23,7 @@ angular.module('bassOS').controller('switchCtl', function($scope, $rootScope, $h
 		$http({
 			method : "PUT",
 			data: {"status" : switch_obj.state},
-			url : "/switches/"+switch_obj.id
+			url : "http://"+window.location.hostname+":3000/switches/"+switch_obj.id
 		});
 		}, 1);
 	};

@@ -4,13 +4,13 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 
 	$http({
 		method : "GET",
-		url : "/settings"
+		url : "http://"+window.location.hostname+":3000/settings"
         }).then(function mySucces(response) {
-		for (var i = 0; i < response.data; i++)
+		for (var i = 0; i < response.data.length; i++)
 			if ($rootScope.settings.hasOwnProperty(response.data[i].name)) {
-				$rootScope.settings[key].state = response.data[i].status;
-				$rootScope.settings[key].active = true;
-				$rootScope.settings[key].id = response.data[i].id;
+				$rootScope.settings[response.data[i].name].state = response.data[i].status;
+				$rootScope.settings[response.data[i].name].active = true;
+				$rootScope.settings[response.data[i].name].id = response.data[i].id;
 			}
 	}, function myError(response) {
 		for (var key in $rootScope.settings)
@@ -22,7 +22,7 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 			$http({
 				method : "PUT",
 				data: {status: settings_obj.state},
-				url : "/settings/"+settings_obj.id
+				url : "http://"+window.location.hostname+":3000/settings/"+settings_obj.id
 			});
 		}, 1);
 	};
@@ -31,7 +31,7 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 		$http({
 			method : "PUT",
 			data: {},
-			url : "os/shutdown"
+			url : "http://"+window.location.hostname+":3000/os/shutdown"
 		});
 	};
 
@@ -39,7 +39,7 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 		$http({
 			method : "PUT",
 			data: {},
-			url : "os/reboot"
+			url : "http://"+window.location.hostname+":3000/os/reboot"
 		});
 	};
 

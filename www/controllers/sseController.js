@@ -45,6 +45,6 @@ angular.module('bassOS').controller("sseCtl", function($scope, $rootScope, $http
 		}
 	}
 	
-	var source = new EventSource(window.location.hostname+':3000/events');
+	var source = new EventSource("http://"+window.location.hostname+":3000/events");
 	source.addEventListener('message', handleCallback, false);
 });
