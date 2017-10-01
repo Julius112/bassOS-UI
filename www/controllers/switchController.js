@@ -1,31 +1,29 @@
 angular.module('bassOS').controller('switchCtl', function($scope, $rootScope, $http) {
-	//TODO: load list as external JSON
+	//TODO: load list from backend service
 	$rootScope.switch_array = [{"id":1, "name":"Unterboden", "state":false, "active":false, "icon_on":"ion-ios-lightbulb", "icon_off":"ion-ios-lightbulb-outline"},
 				{"id":2, "name":"Hupe", "state":false, "active":false, "icon_on":"ion-speakerphone", "icon_off":"ion-speakerphone"}];
 
 		$http({
 			method : "GET",
-			url : "/switch"
+			url : "http://"+window.location.hostname+":3000/switches"
           	}).then(function mySucces(response) {
 			for (var i = 0; i < response.data.length; i++)
 				for (var j = 0; j < $rootScope.switch_array.length; j++)
 					if (response.data[i].id == $rootScope.switch_array[j].id) {
 						$rootScope.switch_array[j].active = true;
-						$rootScope.switch_array[j].state = response.data[i].state;
+						$rootScope.switch_array[j].state = response.data[i].status;
 					}
 		}, function myError(response) {
-			for (var i = 0; i < response.data.length; i++)
 				for (var j = 0; j < $rootScope.switch_array.length; j++)
-					if (response.data[i].id == $rootScope.switch_array[j].id)
-						$rootScope.switch_array[j].active = false;
+					$rootScope.switch_array[j].active = false;
 		});
 
 	$scope.switch_change = function(switch_obj) {
 		setTimeout(function() {
 		$http({
 			method : "PUT",
-			data: {"switch_id" : switch_obj.id, "state" : switch_obj.state},
-			url : "/switch"
+			data: {"status" : switch_obj.state},
+			url : "http://"+window.location.hostname+":3000/switches/"+switch_obj.id
 		});
 		}, 1);
 	};
