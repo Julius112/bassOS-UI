@@ -1,5 +1,19 @@
 <ons-page ng-controller="settingsCtl">
 	<h3 class="left">Einstellungen</h3>
+	<ons-list>
+		<ons-list-header>
+			Schalter
+		</ons-list-header>
+		<ons-list-item modifier="longdivider" ng-repeat="switch in switch_array">
+			<div class="left">
+				{{ switch.name }}
+			</div>
+			<label class="right">
+				<ons-switch my-touchend="switch_change(switch)" ng-model="switch.state" ng-disabled="!switch.active"></ons-switch>
+			</label>
+		</ons-list-item>
+
+
 <ons-list>
 	<ons-list-header>
 		Input Wechsel

@@ -32,7 +32,7 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 				$scope.playing = true;
 			else
 				$scope.playing = false;
-			$scope.queue = newQueue.getSongs();
+			$scope.queue = newState.current_queue.getSongs();
 		});
 	});
 
