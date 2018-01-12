@@ -3,9 +3,9 @@
 	<ons-list>
 		<ons-list-item modifier="longdivider" ng-repeat="song in queue" ng-class="{playing: song.getId() == currentSong}">
 			<div class="left">
-				<ons-input type="checkbox"></ons-input>
+				<ons-checkbox></ons-checkbox>
 			</div>
-			<div class="center" ng-click="playSong(song.getId())">
+			<div class="center" ng-click="clickSong(song)">
 				<span class="list__item__title" ng-bind="song.getTitle()"></span>
 				<span class="list__item__subtitle" ng-bind="song.getArtist()"></span>
 			</div>
