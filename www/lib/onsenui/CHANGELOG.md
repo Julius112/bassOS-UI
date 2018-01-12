@@ -2,6 +2,609 @@
 CHANGELOG
 ====
 
+2.8.3
+----
+
+ ### New Features
+
+ * ons-list-item: Skip tappable effect on children with `prevent-tap` attribute or `ons-*` elements.
+ * ons-navigator: `resetToPage` can now perform 'pop' animation if `options.pop` is `true`.
+
+ ### Bug Fixes
+
+ * ons-carousel: Fixed [#2260](https://github.com/OnsenUI/OnsenUI/issues/2260).
+ * ons-progress-circular: Fixed [#1860](https://github.com/OnsenUI/OnsenUI/issues/1860).
+ * css/polyfills: Fixed [#2266](https://github.com/OnsenUI/OnsenUI/issues/2266).
+ * ons-ripple: The effect does not propagate to other `ons-ripple` parents anymore.
+ * ons-carousel: Prevent error state when hidden during the first rendering.
+ * angular1: `ons-scope` directive works when placed on the same element as `var` attribute.
+
+ ### Misc
+
+ * Show warning when Onsen UI is loaded more than once (UMD - ESM).
+ * ons-pull-hook: `threshold-height` is not disabled anymore when its value is lower than the height.
+ * angular1: Revised the exposed DOM properties for carousel, modal, navigator, popover, pullHook, splitter, splitterSide, switch and tabbar.
+
+2.8.2
+----
+
+### New Features
+
+ * ons-navigator: Added `onSwipe` property function that gets the swiped distance on drag.
+ * ons-splitter-side: Added `onSwipe` property function that gets the swiped distance on drag.
+
+### Bug Fixes
+
+ * ons-splitter: Fixed small glitch in 'reveal' animation.
+ * ons-select: Fixed custom modifier class from `select-*` to `select--*`.
+ * ons-tabbar: Fixed [#2253](https://github.com/OnsenUI/OnsenUI/issues/2253).
+ * ons-tabbar: Position 'auto' and border visibility now cares about autostyling instead of the actual platform.
+ * ons-toolbar: Fix 'transparent' modifier when combined with 'material' (regression).
+ * angular1: Remove `element.scope()` call that depends on AngularJS Debug Data.
+
+2.8.1
+----
+
+### Bug Fixes
+
+ * css-components: Use new radial-gradient syntax to avoid prefixes.
+ * ons-tabbar: Improve scrolling on devices.
+ * ons-modal: Possible issue when toggling modal visibility very quickly.
+ * ons-action-sheet: Small glitch when hiding on iPhone X.
+
+2.8.0
+----
+
+### New Features
+
+ * core: The core CSS is now available without importing default icon fonts in `onsenui-core.css` file. This can be included instead of `onsenui.css` in order to reduce app size.
+ * ons: Added `disableIconAutoPrefix` method to avoid adding `fa-` prefix to non-prefixed icons. This allows using custom icon packs.
+ * esm: A new `esm` folder is available for ES Modules environments. It allows importing specific components instead of the whole bundle. See `Reducing App Size` section in the guide for more details.
+ * angular1: `ons-modal` now exposes event handlers (`ons-preshow`, `ons-postshow`, `ons-prehide`, `ons-posthide`) and `toggle` method.
+
+### Bug Fixes
+
+ * iPhoneX support: Fixed a glitch during push/pop animations.
+ * ons-tab: Fixed [#2247](https://github.com/OnsenUI/OnsenUI/issues/2247).
+ * ons-tabbar: Fixed [#2223](https://github.com/OnsenUI/OnsenUI/issues/2223).
+ * ons-segment: Prevent possible error when linking an `ons-tabbar` placed at the same level.
+ * ons-segment: Adjust style for plain `div` children (instead of `button`).
+ * ons-list-item: Material chevron with right content. Fixed [#2226](https://github.com/OnsenUI/OnsenUI/issues/2226).
+ * ons-lazy-repeat: Lists can be empty. Fixed [#2232](https://github.com/OnsenUI/OnsenUI/issues/2232).
+ * modifier: Fixed [#2237](https://github.com/OnsenUI/OnsenUI/issues/2237).
+
+### Misc
+
+ * :tada: Reduced bundle size by more than 50%!
+
+### BREAKING CHANGES
+
+ * Internal elements location has been changed. E.g. `ons.NavigatorElement` is now `ons.elements.Navigator`. This should only affect if you were registering custom animations.
+ * `NavigatorTransitionAnimator` has been renamed to `NavigatorAnimator` like all the other animators. This should only affect if you were registering custom animations.
+ * `core-src` directory has been removed. `esm` can be used instead. This should only affect if you were manually importing specific components instead of the whole bundle.
+
+2.7.2
+----
+
+### Bug Fixes
+
+ * core: Fixed glitch in nested `<ons-page>`. Fixed [#2231](https://github.com/OnsenUI/OnsenUI/issues/2231).
+
+
+2.7.1
+----
+
+### New Features
+
+ * css-components: Added `--tap-highlight-color` variable for `-webkit-tap-highlight-color` CSS property.
+ * ons-bottom-toolbar: Added `aligned` modifier.
+
+### Bug Fixes
+
+ * css-components: Added `word-wrap: break-word;` to `.card`. Fixed [#2244](https://github.com/OnsenUI/OnsenUI/issues/2244).
+ * css-components: Fixed position of `.toast` in `onsflag-iphonex-portrait` mode.
+ * core: Fix template scripts on Firefox.
+ * ~~core: Fixed glitch in nested `<ons-page>`. Fixed #2231.~~ (incomplete)
+
+### Misc
+
+ * css-components: Made it easy to override `user-select`. Fixed [#2227](https://github.com/OnsenUI/OnsenUI/issues/2227).
+
+2.7.0
+----
+
+### New Features
+
+ * :tada: css-components: Supported iPhone X with `html[onsflag-iphonex-portrait]` and `html[onsflag-iphonex-landscape]` flags.
+ * css-components: Added iOS & Material dark color scheme available as `dark-onsen-css-components.css`.
+ * css-components: Refined the css-components previewer located in `css-components-src`.
+ * core: Supported iOS 11.
+ * ons.mockStatusBar: Now can also show Android's status bar.
+ * ons.platform: Added `isIPhoneX()`, `isIOSSafari()`, `isUIWebView()` and `isWKWebView()`.
+
+### Bug Fixes
+
+ * css-components: Fixed usage of alpha function. Fixed [#2220](https://github.com/OnsenUI/OnsenUI/issues/2220).
+ * css-components: Fixed wrong margin of `.action-sheet` and `.action-sheet-button`.
+ * css-components: Fixed style of `.list-title`.
+ * core: Changed to disable FastClick when it isn't needed. Fixed [#2000](https://github.com/OnsenUI/OnsenUI/issues/2000).
+ * core: Fixed `ons-loading-placeholder` attribute broken on iOS 11.
+ * ons-page: Minor issue with status bar when the page is moved in DOM.
+ * ons-splitter: Correctly set content width on inital split mode. Fixed [#2205](https://github.com/OnsenUI/OnsenUI/issues/2205).
+ * ons-tabbar, ons-carousel: Can now be displayed inside dialogs/modals.
+ * ons-tabbar: Resizing window while tabbar is not visible should not update the tabbar.
+ * dialogs: Prevent scrolling behind dialog masks due to iOS bug. Fixed [#2220](https://github.com/OnsenUI/OnsenUI/issues/2220).
+ * deviceBackButton: Fixed [#2215](https://github.com/OnsenUI/OnsenUI/issues/2215).
+ * templates: Firefox issue. Fixed [#2216](https://github.com/OnsenUI/OnsenUI/issues/2216).
+
+### Misc
+
+ * core: Auto status bar fill for iOS 7+ WebView is now automatically disabled on iPhone X WebView.
+
+### BREAKING CHANGES
+
+ * css-components: Refined iOS & Material color schemes.
+     * The previous color schemes are now available as `css/old-onsen-css-components.css`.
+
+2.6.1
+----
+
+### Bug Fixes
+
+ * GestureDetector: Fixed `findIndex` issue on Android 4.4.4.
+ * templates: Fixed [#2163](https://github.com/OnsenUI/OnsenUI/issues/2163).
+ * ons-tabbar: Fixed [#2189](https://github.com/OnsenUI/OnsenUI/issues/2189).
+ * ons-tabbar, ons-tab: Fixed several issues on iOS 8.
+ * ons-toolbar: Fixed position with `cover-content` modifier and iOS status bar in nested pages.
+ * ons-page: Ensure status-bar-fill is only added to one page.
+
+2.6.0
+----
+
+### New Features
+
+ * core: Added `ons-segment` element.
+ * angular1: Added `ons-segment` bindings.
+ * ons: Added `mockStatusBar` utility to create a fake iOS status bar for browser testing.
+ * ons-pull-hook: Added `onPull` property function that gets the pulled distance on drag.
+ * ons-carousel: Added `onSwipe` property function that gets the swiped distance on drag.
+ * :tada: ons-tabbar: Tabbar can now be swiped to change pages. `swipeable` attribute enables this feature.
+
+### Bug Fixes
+
+ * core: Device Back Button handler timing issue.
+ * GestureDetector: Fixed memory leak from Hammer.js v1.
+ * templates: Fixed a bug where `script` tags might not be ready on time.
+ * autoStyle: Fixed [#2171](https://github.com/OnsenUI/OnsenUI/issues/2171).
+ * inputs: Accept `required` attr. Fixed [#2169](https://github.com/OnsenUI/OnsenUI/issues/2169).
+ * ons-pull-hook: Different glitches on both iOS and Android. Fixed [#1990](https://github.com/OnsenUI/OnsenUI/issues/1990).
+ * ons-list-item: `nodivider` modifier should not hide `chevron`.
+ * ons-list-item: Fixed [#2150](https://github.com/OnsenUI/OnsenUI/issues/2150).
+ * ons-navigator: Fixed [#2167](https://github.com/OnsenUI/OnsenUI/issues/2167).
+ * ons-navigator: iOS slide animation with transparent toolbars glitch.
+ * ons-tabbar: Hide 1px line between toolbar and top tabbar in some Android devices.
+ * ons-modal: Fixed [#2066](https://github.com/OnsenUI/OnsenUI/issues/2066).
+ * ons-toolbar: `cover-content` modifier works with iOS status bar.
+ * ons-carousel: Fixed an animation glitch on iOS due to the cubic Bézier curve.
+ * ons-splitter: Translate3d glitch when opening with `reveal` animation.
+
+### Misc
+
+ * Updated type definitions.
+ * `modifier` classes are restored when `class` attribute is modified.
+ * ons-tab: The first tab will be activated if the `active` attribute is not provided in any tab.
+ * ons-carousel: Improved performance. Animation timing has been adjusted to prevent issues on iOS.
+
+### BREAKING CHANGES
+
+ * ons-tabbar, ons-carousel: DOM structure has been modified. It should not affect except if you manually modify `innerHTML`.
+ * ons-tabbar: Due to the new swipeable feature, `slide` animation is now performed by default unless it is disabled with `animation="none"` attribute. `fade` animator has also been removed (incompatible).
+ * ons-tab: Removed undocumented `ons-tab-active` and `ons-tab-inactive` attributes (from Onsen UI v1).
+
+v2.5.3
+----
+
+### Bug Fixes
+
+ * ons-speed-dial-item: Apply Material Design style correctly.
+ * ons-splitter-side: Fixed [#2026](https://github.com/OnsenUI/OnsenUI/issues/2026).
+ * Fixed glitch during push/pop animation when iOS status bar is visible.
+
+### Misc
+
+ * modifiers: internal modifiers are automatically restored when anything removes them.
+ * docs: Added missing modifiers and attributes.
+
+v2.5.2
+----
+
+### Bug Fixes
+
+ * ons-navigator: Ignore swipes on back buttons.
+ * ons-pull-hook: After popPage transition style fix.
+ * ons-tabbar: Minor issue fixed to improve compatibility with external routers.
+
+### Misc
+
+ * ons.getScriptPage: Added new method as a shortcut to get the current page and attach lifecycle hooks.
+
+v2.5.1
+----
+
+### Bug Fixes
+
+ * onsenui.min.css: Restore 'import' statements.
+ * ons-navigator: Swipe-to-pop animation glitch.
+ * ons-range: Fixed ripple effect when `min` attr is provided.
+
+v2.5.0
+----
+
+### New Features
+
+ * core: Added `ons.modifier` object with a new set of methods to alter `modifier` attributes.
+ * :tada: ons-navigator: iOS Swipe-to-pop feature.
+ * ons-modal: Added `lift` animation ([#2078](https://github.com/OnsenUI/OnsenUI/pull/2078)).
+ * ons-toolbar: New `cover-content` modifier. Should be combined with `transparent` modifier.
+
+### Bug Fixes
+
+ * css-components, ons-list-item: Fixed [#2100](https://github.com/OnsenUI/OnsenUI/issues/2100).
+ * ons-list: Fixed double top border when located right under toolbar.
+ * ons-carousel: Ignores swipes that start outside carousel.
+ * Swipeable components: Swipe is now smoother.
+ * Swipeable components: Fixed compatibility of some swipeable components.
+
+### Misc
+
+ * core css: Add minimized core css file `build/css/onsenui.min.css`.
+ * css-components: Adjusted font size of `.back-button__label` (improves iOS slide animation).
+ * ons-back-button: Replace font icons with SVG icons.
+ * Added `ons-alert-dialog-button` elements.
+ * Added `size` attribute on `ons-ripple` elements.
+ * Added ripple effects properly on `ons-range`, `ons-checkbox`, `ons-radio`, `ons-toolbar-button`, `ons-back-button` and `ons-alert-dialog-button` elements for Material Design.
+
+v2.4.2
+----
+
+### New Features
+
+ * ons-fab: Added new appearances for iOS.
+ * ons-ripple: Added `size` attribute.
+
+### Bug Fixes
+
+ * Revert a recent change that creates `ons-tabbar` issues. Fixed [#2082](https://github.com/OnsenUI/OnsenUI/issues/2082).
+
+v2.4.1
+----
+
+### Bug Fixes
+
+ * ons.notification.prompt: Only returns input value if the clicked button is primary. Otherwise, returns null. Fixed [#2050](https://github.com/OnsenUI/OnsenUI/issues/2050).
+ * ons-input, ons-search-input: Fixed [#2075](https://github.com/OnsenUI/OnsenUI/issues/2075).
+ * ons-icon: Its class attribute is now recovered after modifications.
+
+### Misc
+
+ * css-components: Removed `.text-input--transparent` modifier (same as default style).
+
+v2.4.0
+----
+
+### New Features
+
+ * core: Separated files are now cached after the first request. This improves performance when pushing pages.
+ * core: Added `ons.preload` method to manually cache templates. This improves performance when pushing pages.
+ * :tada: core: Support for `HTMLTemplateElement` (`<template>`). The former `<ons-template>` is still supported for backward compatibility.
+ * core: Added page life-cycle hooks (similar to life-cycle events). `<template>` elements allow `<script>` tags in their content, which is useful for initialising pages. Therefore, hooks like `pageElement.onInit`, `pageElement.onShow`, etc. have been added.
+ * ons-progress-bar, ons-progress-circular: Added new appearances for iOS.
+
+### Bug Fixes
+
+ * css-components: Fixed incorrect image path (select, search input).
+ * ons-tabbar, ons-lazy-repeat, ons-carousel: `ons-tabbar` now applies `visibility:hidden` instead of `display:none` to pages. This fixes issues for `ons-lazy-repeat` and `ons-carousel` inside `ons-tabbar`.
+ * ons-carousel: Fixed [#2065](https://github.com/OnsenUI/OnsenUI/issues/2065).
+
+### Misc
+
+ * css-components: Refined the appearance of `checkbox` on iOS.
+ * css-components: Refined the appearance of `radio-button` on iOS.
+ * css-components: Refined the appearance of `button` on Android.
+ * css-components: Refined the appearance of `progress-bar` on Android.
+ * css-components: Refined the appearance of `progress-circular` on Android.
+ * css-components: Refined the appearance of `checkbox` animation on Android.
+ * css-components: Refined the appearance of `list-item--chevron`.
+ * core: Updated `font-awesome` icon library.
+ * ons-toast: Improved `ascend` animator performance.
+
+### BREAKING CHANGES
+
+ * ons-input: It has been split into different elements: `ons-input` for text types; `ons-checkbox` for checkboxes; `ons-radio` for radio buttons; and `ons-search-input` for styled search inputs.
+     * `<ons-input type="radio" checked>` => `<ons-radio checked>`
+
+v2.3.3
+----
+
+### New Features
+
+ * onsenui.d.ts: Enabled `import * as ons from 'onsenui';` in TypeScript.
+ * onsenui.d.ts: Added definitions for Onsen UI 2.3.x.
+
+### Misc
+
+ * core: Added warning which is shown when Onsen UI is loaded more than once.
+
+v2.3.2
+----
+
+### New Features
+
+ * css-components: Added `--material` modifier on `notification` CSS components.
+
+### Bug Fixes
+
+ * ons-page: Fixed iOS status-bar-fill not added in initially opened modals ([#1944](https://github.com/OnsenUI/OnsenUI/issues/1944)).
+ * ons-splitter: Fixed `reveal` animation glitch.
+ * ons-action-sheet: Fixed glitch when hiding on iOS.
+
+### Misc
+
+ * css-components: Refined the appearance of `select`. Fixed [#2017](https://github.com/OnsenUI/OnsenUI/issues/2017).
+ * css-components: Refined the appearance of `range` on iOS.
+ * core: Excluded test cases from `onsenui` package.
+
+v2.3.1
+----
+
+### Misc
+
+ * Remove `module` property from `package.json` temporarily.
+
+v2.3.0
+----
+
+### New Features
+
+ * css-components: Added `action-sheet` component.
+ * css-components: Added `toast` component.
+ * css-components: Added `card` component.
+ * css-components: Added `segment` component.
+ * core: Added `ons-action-sheet` and `ons-action-sheet-button` elements.
+ * core: Added `ons-toast` element.
+ * core: Added `ons-card` element.
+ * core: Added new method `ons.openActionSheet(...)` for creating inline `ons-action-sheet` elements.
+ * core: Added new method `ons.notification.toast(...)` for creating inline and queued `ons-toast` elements.
+ * core: Added new method `ons.createElement(...)` that allows creating new elements from templates or inline HTML.
+ * core: `onsenui` is now available as ES Modules.
+ * core: A fake device back button event is now fired on ESC press.
+ * ons-navigator: Added `removePage` method.
+ * ons-input: Added styling support for `type='search'`.
+ * angular1: Added `ons-action-sheet` bindings.
+ * angular1: Added `ons-toast` bindings.
+ * angular1: Added `ons-card` bindings.
+ * angular1: Added `ons-list-title` bindings.
+
+### Bug Fixes
+
+ * css-components: Fixed color of range component in Firefox. Fixed [#1964](https://github.com/OnsenUI/OnsenUI/issues/1964).
+ * core: Fixed broken sourcemap of `onsenui.js` ([#1958](https://github.com/OnsenUI/OnsenUI/issues/1958)).
+ * ons-carousel: Fixed [#1952](https://github.com/OnsenUI/OnsenUI/issues/1952).
+ * ons-carousel: `refresh` event is now triggered when resized.
+ * ons-dialog: Fixed `disabled` attribute.
+ * ons-dialog: Fixed `mask-color` attribute.
+ * ons-splitter: Fixed `animation` attribute issue.
+ * angular1: Page loader now throws `destroy` event when page is unloaded.
+ * angular1: `myNavigator.topPage.data` should now be ready by the time the controller runs. Fixed [#1854](https://github.com/OnsenUI/OnsenUI/issues/1854).
+
+### Misc
+
+ * core: Removed polyfill for `Element.prototype.remove`.
+ * core: Removed polyfill for `Element.prototype.classList`.
+ * core: Removed polyfill for `Promise`.
+ * core: Removed polyfill for `CustomEvent`.
+ * core: Removed [JavaScript Dynamic Content shim for Windows 8 Store apps](https://github.com/Microsoft/winstore-jscompat).
+
+### BREAKING CHANGES
+
+ * ons-navigator: Removed `options.refresh`. `prepop` event and `removePage` can be used instead.
+ * ons-template, external files: `ons-page` tag is not added automatically anymore as a wrapper of the target template. It must be manually specified.
+ * ons.createDialog, ons.createPopover, ons.createAlertDialog: Tags like `<ons-dialog>`, `<ons-alert-dialog>` or `<ons-popover>` are not added automatically anymore to the target template, they must be manually specified instead.
+ * ons.notification: Canceled notifications do not reject the returned promise anymore. Instead, when canceled they resolve to `-1` for `alert` and `confirm`, or `null` for `prompt`.
+ * angular1: Removed `onsSlidingMenu` and `onsSplitView` directives.
+
+v2.2.6
+----
+
+### Bug Fixes
+
+ * ons-splitter: Fixed timing for initial animations in bindings ([#1979](https://github.com/OnsenUI/OnsenUI/issues/1979), [#1985](https://github.com/OnsenUI/OnsenUI/issues/1985)).
+ * ons-tabbar: Minor fix for situations where the '.page__content' is provided ([#1978](https://github.com/OnsenUI/OnsenUI/issues/1978)).
+ * ons-input: Fixed [#1974](https://github.com/OnsenUI/OnsenUI/issues/1974).
+ * Device back button: Fixed possible crash in old platforms ([#1983](https://github.com/OnsenUI/OnsenUI/issues/1983)).
+
+v2.2.5
+----
+
+### New Features
+
+ * css-components: Added `list-title` component ([#1960](https://github.com/OnsenUI/OnsenUI/issues/1960)).
+ * core: Added `ons-list-title` element.
+ * ons-splitter: Added `push` and `reveal` animations ([#1916](https://github.com/OnsenUI/OnsenUI/issues/1916)).
+
+### Bug Fixes
+
+ * core: Polyfill `Set` and `Map` in order to support old browsers ([#1967](https://github.com/OnsenUI/OnsenUI/issues/1967)).
+ * ons-navigator: Discard toolbars inside tabbars for ios-slide.
+ * ons-carousel: Fixed [#1952](https://github.com/OnsenUI/OnsenUI/issues/1952).
+ * ons-pull-hook: Fixed [#1970](https://github.com/OnsenUI/OnsenUI/issues/1970).
+ * angular1: Page loader now throws `destroy` event when page is unloaded ([#1934](https://github.com/OnsenUI/OnsenUI/issues/1934)).
+ * angular1: `myNavigator.topPage.data` should now be ready by the time the controller runs. Fixed [#1854](https://github.com/OnsenUI/OnsenUI/issues/1854).
+
+### Misc
+
+ * Restored `bower.json`.
+ * Refactored `ons-alert-dialog`, `ons-dialog`, `ons-modal` and `ons-popover` ([#1935](https://github.com/OnsenUI/OnsenUI/issues/1935)).
+
+v2.2.4
+----
+
+### Bug Fixes
+
+ * core: Fixed broken parts of CE1 polyfill which caused a broken behavior of `vue-onsenui` ([#1925](https://github.com/OnsenUI/OnsenUI/issues/1925)).
+ * ons-splitter-content: Fixed [#1772](https://github.com/OnsenUI/OnsenUI/issues/1772) and [#1930](https://github.com/OnsenUI/OnsenUI/issues/1930).
+ * ons-input: Added initial date value support. Fixed [#1603](https://github.com/OnsenUI/OnsenUI/issues/1603).
+ * ons-switch: Fixed [#1920](https://github.com/OnsenUI/OnsenUI/issues/1920).
+ * ons-progress-circular: Fixed [#1921](https://github.com/OnsenUI/OnsenUI/issues/1921).
+
+### Misc
+
+ * Removed `bower.json`.
+
+v2.2.3
+----
+
+### Bug Fixes
+
+ * core: Improve overall stability of the core on iOS by replacing Custom Elements v1 polyfill ([#1892](https://github.com/OnsenUI/OnsenUI/issues/1892)).
+
+v2.2.2
+----
+
+### New Features
+
+ * angular1: `ons-back-button` default behavior is now overriden if `ng-click` is provided ([#1749](https://github.com/OnsenUI/OnsenUI/issues/1749)).
+
+### Bug Fixes
+
+ * css-components: Fixed [#1896](https://github.com/OnsenUI/OnsenUI/issues/1896).
+ * core: Use `self` in `setImmediate` polyfill ([#1903](https://github.com/OnsenUI/OnsenUI/issues/1903)).
+ * core: Make `ons.platform.isSafari()` compatible with Safari 10 ([#1910](https://github.com/OnsenUI/OnsenUI/issues/1910)).
+ * ons-lazy-repeat: Fixed [#1899](https://github.com/OnsenUI/OnsenUI/issues/1899) and [#1871](https://github.com/OnsenUI/OnsenUI/issues/1871).
+ * ons-splitter: Overlay animation correctly hides mask when entering split mode if the menu was visible before.
+ * angular1: Fixed [#1884](https://github.com/OnsenUI/OnsenUI/issues/1884).
+
+v2.2.1
+----
+
+### New Features
+
+ * css-components: Add minimized css-components file on `build/css/onsen-css-components.min.css`.
+
+### Bug Fixes
+
+ * ons-navigator: iOS Slide animation can now find toolbars that are not immediate children of the pages.
+ * ons-splitter: mask is hidden only if all splitter-sides are in split mode.
+ * ons-tab: It shows the last visible page instead of the initial one when reattached.
+ * ons-pull-hook: Its content is not visible anymore during toolbar transitions.
+ * ons-fab: It is now initally hidden and shown only when its page container is pushed. This fixes page transitions.
+ * ons-fab: Covers the toolbar.
+ * ons-fab: Hide animation on popPage is now visible.
+ * ons-speed-dial: Hide items animation on popPage is now visible.
+ * ons-input: text selection in Firefox.
+ * ons-icon: Fixed [#1890](https://github.com/OnsenUI/OnsenUI/issues/1890).
+
+### Misc
+
+ * css-components: Refactored some components.
+
+v2.2.0
+----
+
+### New Features
+
+ * ons-switch: Supports `value` attribute.
+ * ons-tab: Supports `active-icon` attribute.
+ * ons-lazy-repeat: Support for dynamic height.
+ * angular1: Add `onsSelect` directive working with `ngModel`.
+
+### Bug Fixes
+
+ * css-components: Fixed broken popover components.
+ * css-components: Fixed [#1653](https://github.com/OnsenUI/OnsenUI/issues/1653).
+ * core: Fix `autoprefixer` settings for `onsenui.css`.
+ * core: Fixed [#1700](https://github.com/OnsenUI/OnsenUI/issues/1700).
+ * ons-select: Fix width of the inner element.
+ * ons-dialog: Fix broken `default` and `slide` animation in iOS 9 and iOS 10.
+ * ons-popover: Fixed behavior on device back button.
+ * ons-splitter: Checks if content exists before removing.
+ * ons-carousel: Supports `animation` attribute.
+ * ons-lazy-repeat: Clean first item scope.
+ * ons-progress-circular: Fixed [#1860](https://github.com/OnsenUI/OnsenUI/issues/1860).
+ * ons.notification: Fixed [#1787](https://github.com/OnsenUI/OnsenUI/issues/1787).
+ * ons-row: Fixed [#1858](https://github.com/OnsenUI/OnsenUI/issues/1858).
+ * angular1: `number input` retains number type variable with `ngModel`.
+ * angular1: Fixed [#1843](https://github.com/OnsenUI/OnsenUI/issues/1843).
+ * angular1: Fixed [#1799](https://github.com/OnsenUI/OnsenUI/issues/1799).
+
+### Misc
+
+ * css-components: Refactored `range` components.
+ * ons-template: Show warning when ons-template is not located just under document.body.
+ * ons-navigator: Added deprecate warning for `options.refresh`.
+ * angular1: Added deprecate warnings to `ons-sliding-menu` and `ons-split-view`.
+
+### BREAKING CHANGES
+
+ * css-components: Dropped all stylus and rebuild css-components with cssnext.
+ * css-components: Renamed `.tab-bar` to `.tabbar`.
+ * css-components: Renamed `.navigation-bar` to `.toolbar`.
+ * css-components: Renamed `.list__item` to `.list-item`.
+ * css-components: Renamed `.list__header` to `.list-header`.
+ * css-components: Changed `.button-bar__item > input` to `.button-bar__input`.
+ * ons-tabbar: loadPage method has been deprecated.
+ * ons-popover: Changed internal DOM structure.
+ * ons-range: Changed internal DOM structure.
+
+v2.1.0
+----
+
+ * core: Add new component `ons-select`.
+ * core: All component classes exposes event list with static getter `events`.
+ * ons-navigator, ons-page: Fixed the issue that pushed options is always empty on Angular2-binding and macOS Safari.
+ * ons-navigator: Fixed [#1726](https://github.com/OnsenUI/OnsenUI/issues/1726).
+ * ons-navigator: Animations block the interaction.
+ * ons-navigator: Fix ternary operator error on `options.leavePage`.
+ * ons-splitter: Add `side` property.
+ * ons-splitter: Check content before hide/destroy.
+ * ons-tab: Default click behavior can be overwritten by setting `onClick` property.
+ * ons-tabbar: Add `show` method, `hide` method and `visible` property.
+ * ons-dialog, ons-alert-dialog, ons-popover: User created dialogs are not moved inside page content.
+ * ons-popover: `show` supports `options.target`.
+ * ons-speed-dial: `show`, `hide`, `showItems`, `hideItems`, `toggle` and `toggleItems` now return Promise.
+ * ons-fab: Execute `this.show()` and some statements before `contentReady`.
+ * angular1: Fix `load` method of `ons-splitter-content`.
+
+### BREAKING CHANGES
+
+ * ons-input: Deprecate `content-left` attribute.
+ * css-components: Rename undocumented modifier `one` to `rowfooter`.
+
+v2.0.5
+----
+ * core: Changed all elements to have default className token always. Fixed [#1711](https://github.com/OnsenUI/OnsenUI/issues/1711).
+ * ons-switch: Fix `disbled` to `disabled`.
+ * angular1: Fix [#1677](https://github.com/OnsenUI/OnsenUI/issues/1677).
+ * ons-tabbar: Fix [#1654](https://github.com/OnsenUI/OnsenUI/issues/1654).
+ * ons-input: Fix `float` attribute style.
+ * ons-input: Added `transparent` modifier for Material Design.
+ * ons-modal: Pages inside modal throw show and hide events.
+ * ons-page: Fixed infinite scroll for iOS.
+ * core: All animators are extendable.
+ * angular1: $event in event handlers is not empty anymore.
+ * core: Remove Windows Phone 10+ support temporarily.
+ * ons-carousel: initial-index works when the carousel is inside ons-navigator.
+ * ons-switch: Always triggers custom events and stops propagation from inner element events.
+ * ons-tab: Throws verbose error if cannot create pageElement.
+ * ons-dialog: Fix broken dialog animation on iOS 9.x and 10.x caused by `dialog-container` class.
+
+v2.0.4
+----
+ * angular1: Fix issue in event removal.
+ * ons-pull-hook: Fixed bug where ons-pull-hook does not work when we swipe up/down a screen too fast.
+ * ons-tab: Fixed [#1593](https://github.com/OnsenUI/OnsenUI/issues/1593).
+ * core: Use [yarn](https://yarnpkg.com/) for dependency management.
+
 v2.0.3
 ----
  * ons-page: Fixed [#1649](https://github.com/OnsenUI/OnsenUI/issues/1649).
@@ -16,7 +619,6 @@ v2.0.2
  * ons-tab: Add `badge` attribute to display notification on tab.
  * ons.notification: Added `options.inputType` and `options.class`.
  * ons.notification: Fix [#1638](https://github.com/OnsenUI/OnsenUI/issues/1638).
- * angular2-binding: Added Angular 2 AOT support.
  * ons.notification: Fixed memory leak.
  * angular1: Fix [#1620](https://github.com/OnsenUI/OnsenUI/issues/1620).
  * ons-icon: Fix [#1636](https://github.com/OnsenUI/OnsenUI/issues/1636).
@@ -55,9 +657,6 @@ v2.0.0-rc.17
 
 v2.0.0-rc.16
 ----
- * angular2-binding: Removed `OnsPage`, `OnsAlertDialog` and `OnsPopover` directives.
- * angular2-binding: Renamed `PageParams` to `Params`.
- * angular2-binding: Added Angular2 API for `ons-alert-dialog`, `ons-popover`, `ons-dialog` and `ons-modal` components.
  * ons-splitter-side, ons-splitter-content: Added "page" and "pageLoader" property. Changed to use page-loader instead of `ons._internal.getPageHTMLAsync()`.
  * ons-navigator: Added "page" and "pageLoader" property. Changed to use page-loader instead of `ons._internal.getPageHTMLAsync()`.
  * ons-tabbar, ons-tab: Added "page" and "pageLoader" property. Changed to use page-loader instead of `ons._internal.getPageHTMLAsync()`.
