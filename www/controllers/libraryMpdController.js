@@ -33,19 +33,28 @@ angular.module('bassOS').controller('libraryMpdCtl', function($scope, mpd) {
 			}
 		).then((buttonId) => {
 			if(buttonId == 0)
-				queue_add_next(song);
-			else if (buttonId == 1)
 				queue_add_end(song);
 		});
 	};
 
-	$scope.search_change = () => {
-		var params = {any: $scope.search};
-		mpd.mpd_client.search(params, (results) => {
-			$scope.searchlist = [];
-			results.forEach((option) => {
-				$scope.searchlist.push(option);
+	$scope.search_change = (search) => {
+		var params = {any: search};
+			mpd.mpd_client.search(params, (results) => {
+				$scope.$apply(() => {
+					$scope.searchlist = [];
+					results.forEach((option) => {
+						$scope.searchlist.push(option);
+					});
+				});
+			});
+	};
+
+}).directive('myKeyup', function() {
+	return function(scope, element, attr) {
+		element.on('keyup', function(event) {
+			scope.$apply(function() {
+				scope.$eval(attr.myKeyup);
 			});
 		});
 	};
-}); 
+});

@@ -81,9 +81,9 @@ angular.module('bassOS').controller('settingsCtl', function($scope, $rootScope, 
 }).directive('myTouchend', function() {
 	return function(scope, element, attr) {
 		element.on('touchend', function(event) {
-			scope.$apply(function() { 
-				scope.$eval(attr.myTouchend); 
+			scope.$apply(function() {
+				scope.$eval(attr.myTouchend);
 			});
 		});
 	};
-});; 
+});
