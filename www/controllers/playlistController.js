@@ -64,4 +64,12 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 				playSong(song);
 		});
 	};
-}); 
+
+	$scope.queueRemoveSelected = () => {
+		$scope.queue.forEach((song) => {
+			if (song.selected)
+				mpd.mpd_client.removeSongFromQueueById(song.getId());
+		});
+	};
+
+});
