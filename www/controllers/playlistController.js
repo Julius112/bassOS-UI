@@ -16,9 +16,14 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 
 	/* MPD CONNECT */
 	mpd.mpd_client.on('Connect', () => {
+		var state = mpd.mpd_client.getState();
+		var cur_song = mpd.mpd_client.getCurrentSong();
 		$scope.$apply(() => {
-			var state = mpd.mpd_client.getState();
-			$scope.currentSong = state.current_song.id;
+			$scope.currentSongId = state.current_song.id;
+			if (cur_song.getArtist())
+				$scope.currentSongName = cur_song.getArtist() + " - " + cur_song.getTitle();
+			else
+				$scope.currentSongName = cur_song.getDisplayName();
 			if (state.playstate === "PLAYING")
 				$scope.playing = true;
 			else
@@ -38,8 +43,13 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 	/* STATE UPDATE */
 	mpd.mpd_client.on('StateChanged', (newState) => {
 		console.log("change");
+		var cur_song = mpd.mpd_client.getCurrentSong();
 		$scope.$apply(() => {
-			$scope.currentSong = newState.current_song.id;
+			$scope.currentSongId = newState.current_song.id;
+			if (cur_song.getArtist())
+				$scope.currentSongName = cur_song.getArtist() + " - " + cur_song.getTitle();
+			else
+				$scope.currentSongName = cur_song.getDisplayName();
 			if (newState.playstate === "PLAYING")
 				$scope.playing = true;
 			else
