@@ -20,3 +20,17 @@ h4 {
 .playing {
 	background-color: #ccc;
 }
+
+.song-preview {
+	overflow: hidden;
+	width: 70%;
+	/* Overwrite max-width from Onsen */
+	max-width: 70%;
+	margin-left: 1%;
+}
+
+.song-preview-ctl {
+  width: 12%;
+  text-align: center;
+	margin-left: 1%;
+}

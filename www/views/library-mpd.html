@@ -1,0 +1,18 @@
+<ons-page ng-controller="libraryMpdCtl">
+	<ons-toolbar>
+		<div class="left"><ons-back-button>Zurück</ons-back-button></div>
+		<div class="center">MPD Mediathek</div>
+	</ons-toolbar>
+	<ons-list>
+		<ons-list-item>
+			<ons-input placeholder="Suchen" ng-model="search" my-keyup="search_change(search)"></ons-input>
+		</ons-list-item>
+	</ons-list>
+	<ons-list>
+		<ons-list-item tappable modifier="longdivider" ng-repeat="res in searchlist" ng-click="select_song(res)">
+			<div class="center" ng-bind="res.getDisplayName()">
+			</div>
+		</ons-list-item>
+	</ons-list>
+</ons-page>
+

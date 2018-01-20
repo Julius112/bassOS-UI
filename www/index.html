@@ -31,14 +31,14 @@
 <!-- include controllers -->
 <script src="controllers/sseController.js"></script>
 <script src="controllers/settingsController.js"></script>
-<script src="controllers/switchController.js"></script>
 <script src="controllers/playlistController.js"></script>
+<script src="controllers/libraryMpdController.js"></script>
 <!-- include services -->
 <script src="services/mpd.js"></script>
 <!-- include views -->
+<div ng-include="'views/library.html'"></div>
 <div ng-include="'views/settings.html'"></div>
 <div ng-include="'views/playlist.html'"></div>
-<div ng-include="'views/switch.html'"></div>
 
 	<ons-page ng-controller="sseCtl">
 		<ons-toolbar>
@@ -47,9 +47,9 @@
 			</div>
 		</ons-toolbar>
 		<ons-tabbar>
-			<ons-tab label="Playlist" icon="ion-ios-list" active="true" page="views/playlist.html">
+			<ons-tab label="Mediathek" icon="ion-ios-list" page="views/library.html">
 			</ons-tab>
-			<ons-tab label="Schalter" icon="ion-ios-toggle" page="views/switch.html">
+			<ons-tab label="Playlist" icon="ion-ios-list" active="true" page="views/playlist.html">
 			</ons-tab>
 			<ons-tab label="Einstellungen" icon="cog" page="views/settings.html">
 			</ons-tab>
