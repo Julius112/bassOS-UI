@@ -23,21 +23,14 @@
 	</ons-list>
 	<ons-bottom-toolbar>
 	<ons-toolbar>
-		<div class="left">
-			<span ng-bind="currentSongName"></span>
+		<div class="left song-preview" ng-bind="currentSongName">
 		</div>
-		<div class="right">
-			<table style="width: 100%">
-				<tr>
-					<td>
-						<ons-icon icon="ion-play" ng-show="!playing"></ons-icon>
-						<ons-icon icon="ion-pause" ng-show="playing"></ons-icon>
-					</td>
-					<td>
-						<ons-icon icon="ion-skip-forward"></ons-icon>
-					</td>
-				</tr>
-			</table>
+		<div class="center song-preview-ctl">
+			<ons-icon icon="ion-play" ng-show="!playing"></ons-icon>
+			<ons-icon icon="ion-pause" ng-show="playing"></ons-icon>
+		</div>
+		<div class="right song-preview-ctl">
+			<ons-icon icon="ion-skip-forward"></ons-icon>
 		</div>
 	</ons-toolbar>
 	</ons-bottom-toolbar>

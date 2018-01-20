@@ -21,7 +21,7 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 		$scope.$apply(() => {
 			$scope.currentSongId = state.current_song.id;
 			if (cur_song.getArtist())
-				$scope.currentSongName = cur_song.getArtist() + " - " + cur_song.getTitle();
+				$scope.currentSongName = cur_song.getTitle() + " - " + cur_song.getArtist();
 			else
 				$scope.currentSongName = cur_song.getDisplayName();
 			if (state.playstate === "PLAYING")
@@ -47,7 +47,7 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 		$scope.$apply(() => {
 			$scope.currentSongId = newState.current_song.id;
 			if (cur_song.getArtist())
-				$scope.currentSongName = cur_song.getArtist() + " - " + cur_song.getTitle();
+				$scope.currentSongName = cur_song.getTitle() + " - " + cur_song.getArtist();
 			else
 				$scope.currentSongName = cur_song.getDisplayName();
 			if (newState.playstate === "PLAYING")
