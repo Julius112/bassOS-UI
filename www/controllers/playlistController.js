@@ -21,13 +21,10 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 		$scope.$apply(() => {
 			$scope.currentSongId = state.current_song.id;
 			if (cur_song.getArtist())
-				$scope.currentSongName = cur_song.getTitle() + " - " + cur_song.getArtist();
+				$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
 			else
 				$scope.currentSongName = cur_song.getDisplayName();
-			if (state.playstate === "PLAYING")
-				$scope.playing = true;
-			else
-				$scope.playing = false;
+			$scope.playing = (state.playstate === "play");
 			$scope.queue = state.current_queue.getSongs();
 		});
 	});
@@ -47,13 +44,10 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 		$scope.$apply(() => {
 			$scope.currentSongId = newState.current_song.id;
 			if (cur_song.getArtist())
-				$scope.currentSongName = cur_song.getTitle() + " - " + cur_song.getArtist();
+				$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
 			else
 				$scope.currentSongName = cur_song.getDisplayName();
-			if (newState.playstate === "PLAYING")
-				$scope.playing = true;
-			else
-				$scope.playing = false;
+			$scope.playing = (newState.playstate === "play");
 			$scope.queue = newState.current_queue.getSongs();
 		});
 	});
@@ -80,6 +74,17 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 			if (song.selected)
 				mpd.mpd_client.removeSongFromQueueById(song.getId());
 		});
+	};
+
+	$scope.setPlayback = (playing) => {
+		if (playing)
+			mpd.mpd_client.pause();
+		else
+			mpd.mpd_client.play();
+	};
+
+	$scope.setPlaybackNext = () => {
+		mpd.mpd_client.next();
 	};
 
 });
