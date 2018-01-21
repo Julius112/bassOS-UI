@@ -1,0 +1,48 @@
+<ons-page ng-controller="songviewCtl">
+	<ons-toolbar>
+		<div class="center"	ng-click="myNavigator.popPage()">
+			<ons-icon icon="ion-ios-arrow-down"></ons-icon>
+		</div>
+	</ons-toolbar>
+	<div class="songview-image">
+		<img src="media/bass.svg" />
+	</div>
+	<div class="songview-progress">
+		<ons-progress-bar value="23"></ons-progress-bar>
+	</div>
+	<div class="songview-progress-numbers">
+		<div class="songview-progress-number-left">
+			<span>2.85</span>
+		</div>
+		<div class="songview-progress-number-right">
+			<span>-1.10</span>
+		</div>
+	</div>
+	<div class="songview-song">
+		<h3>Carousel (KXA Remix)</h3>
+		<h4>Melanie Martines</h4>
+	</div>
+	<div class="songview-controlls">
+		<div class="songview-controlls-left">
+			<ons-icon size="30px" icon="ion-skip-backward"></ons-icon>
+		</div>
+		<div class="songview-controlls-center">
+			<ons-icon size="40px" icon="ion-play"></ons-icon>
+		</div>
+		<div class="songview-controlls-right">
+			<ons-icon size="30px" icon="ion-skip-forward"></ons-icon>
+		</div>
+	</div>
+	<div class="songview-volume">
+	<ons-row>
+		<ons-col width="40px" class="songview-volume-icon">
+			<ons-icon icon="md-volume-down"></ons-icon>
+		</ons-col>
+		<ons-col>
+			<ons-range class="songview-volume-range"></ons-range>
+		</ons-col>
+		<ons-col width="40px" class="songview-volume-icon">
+			<ons-icon icon="md-volume-up"></ons-icon>
+		</ons-col>
+	</ons-row>
+</ons-page>

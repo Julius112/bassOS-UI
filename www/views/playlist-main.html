@@ -1,0 +1,37 @@
+<ons-page ng-controller="playlistCtl">
+	<ons-toolbar>
+		<div class="center">
+			Playlist
+		</div>
+		<div class="right">
+			<ons-button ng-click="queueRemoveSelected()">Entfernen</ons-button>
+		</div>
+	</ons-toolbar>
+	<ons-list>
+		<ons-list-item modifier="longdivider" ng-repeat="song in queue" ng-class="{playing: song.getId() == currentSongId}">
+			<div class="left">
+				<ons-checkbox ng-model="song.selected"></ons-checkbox>
+			</div>
+			<div class="center" ng-click="clickSong(song)">
+				<span class="list-item__title" ng-bind="song.getTitle()"></span>
+				<span class="list-item__subtitle" ng-bind="song.getArtist()"></span>
+			</div>
+			<label class="right">
+				<ons-icon icon="ion-drag" class="list-item__icon"></ons-icon>
+			</label>
+		</ons-list-item>
+	</ons-list>
+	<ons-bottom-toolbar>
+	<ons-toolbar>
+		<div class="left song-preview" ng-click="myNavigator.pushPage('views/songview.html')" ng-bind="currentSongName">
+		</div>
+		<div class="center song-preview-ctl" ng-click="setPlayback(playing)">
+			<ons-icon size="20px" icon="ion-play" ng-show="!playing"></ons-icon>
+			<ons-icon size="20px" icon="ion-pause" ng-show="playing"></ons-icon>
+		</div>
+		<div class="right song-preview-ctl" ng-click="setPlaybackNext()">
+			<ons-icon size="20px" icon="ion-skip-forward"></ons-icon>
+		</div>
+	</ons-toolbar>
+	</ons-bottom-toolbar>
+</ons-page>
