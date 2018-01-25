@@ -7,7 +7,6 @@ angular.module('bassOS').controller("sseCtl", function($scope, $rootScope, $http
 	var events = {"switch_event" : {"id" : 1}, "settings_event" : {"id" : 2}, "playlist_event" : {"id" : 3}};
 	
 	var switch_event = function (event_data) {
-		console.log("SSE: "+event_data.id+" state: "+event_data.state);
 		for (var i = 0; i < $rootScope.switch_array.length; i++) {
 			if($rootScope.switch_array[i].id == event_data.id)
             			$rootScope.$apply(function () {
@@ -18,7 +17,6 @@ angular.module('bassOS').controller("sseCtl", function($scope, $rootScope, $http
 	
 	var settings_event = function (event_data) {
 		for ( key in event_data ) {
-			console.log("SSE :"+key);
 			$rootScope.$apply(function () {
 				$rootScope.settings[key].state = event_data[key].state;
 			});

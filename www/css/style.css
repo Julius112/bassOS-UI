@@ -36,12 +36,9 @@ h4 {
 }
 
 .songview-image {
-	width: 40%;
-	margin: 5% auto;
-}
-
-.songview-image img {
+	height: 30%;
 	width: 100%;
+	margin: 6% auto;
 }
 
 .songview-progress {
@@ -69,8 +66,10 @@ h4 {
 }
 
 .songview-song {
-	margin: 10% auto;
+	margin: 10% auto 5% auto;
 	width: 80%;
+	height: 20%;
+	overflow: hidden;
 }
 
 .songview-song h3 {
@@ -79,11 +78,13 @@ h4 {
 
 .songview-song h4 {
 	text-align: center;
+	font-size: 14px;
 }
 
 .songview-controlls {
 	margin: 5% auto;
 	width: 50%;
+	height: 40px;
 }
 
 .songview-controlls-left {
@@ -107,7 +108,7 @@ h4 {
 }
 
 .songview-volume {
-	margin: 25% auto;
+	margin: 2% auto;
 	width: 95%;
 }
 

@@ -31,7 +31,6 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 
 	/* QUEUE UPDATE */
 	mpd.mpd_client.on('QueueChanged', (newQueue) => {
-		console.log("change");
 		$scope.$apply(() => {
 			$scope.queue = newQueue.getSongs();
 		});
@@ -39,7 +38,6 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 
 	/* STATE UPDATE */
 	mpd.mpd_client.on('StateChanged', (newState) => {
-		console.log("change");
 		var cur_song = mpd.mpd_client.getCurrentSong();
 		$scope.$apply(() => {
 			$scope.currentSongId = newState.current_song.id;

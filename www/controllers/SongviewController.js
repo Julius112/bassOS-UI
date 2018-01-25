@@ -1,6 +1,26 @@
 angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 	/* INIT */
 	$scope.playing = false;
+	$scope.song = {
+		title : "loading...",
+		artist : "",
+		volume : "50"
+	};
+
+	/* INIT: When view is pushed */
+	this.init = function(e) {
+			// Ensure the emitter is the current page, not a nested one
+			if (e.target === e.currentTarget) {
+				var state = mpd.mpd_client.getState();
+				var cur_song = mpd.mpd_client.getCurrentSong();
+				$scope.$apply(() => {
+					$scope.song.title = cur_song.getTitle();
+					$scope.song.artist = cur_song.getArtist();
+					$scope.song.volume = state.volume;
+					$scope.playing = (state.playstate === "play");
+				});
+			}
+		};
 
 	var playSongNext = (song) => {
 		var current_pos = mpd.mpd_client.getCurrentSongQueueIndex();
@@ -10,77 +30,39 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 			mpd.mpd_client.moveSongOnQueueById(song.getId(), current_pos + 1);
 	};
 
-	var playSong = (song) => {
-		mpd.mpd_client.playById(song.getId());
-	};
-
 	/* MPD CONNECT */
 	mpd.mpd_client.on('Connect', () => {
 		var state = mpd.mpd_client.getState();
 		var cur_song = mpd.mpd_client.getCurrentSong();
 		$scope.$apply(() => {
-			$scope.currentSongId = state.current_song.id;
-			if (cur_song.getArtist())
-				$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
-			else
-				$scope.currentSongName = cur_song.getDisplayName();
+			$scope.song.title = cur_song.getTitle();
+			$scope.song.artist = cur_song.getArtist();
+			$scope.song.volume = state.volume*100;
 			$scope.playing = (state.playstate === "play");
-			$scope.queue = state.current_queue.getSongs();
-		});
-	});
-
-	/* QUEUE UPDATE */
-	mpd.mpd_client.on('QueueChanged', (newQueue) => {
-		console.log("change");
-		$scope.$apply(() => {
-			$scope.queue = newQueue.getSongs();
 		});
 	});
 
 	/* STATE UPDATE */
 	mpd.mpd_client.on('StateChanged', (newState) => {
-		console.log("change");
 		var cur_song = mpd.mpd_client.getCurrentSong();
 		$scope.$apply(() => {
-			$scope.currentSongId = newState.current_song.id;
-			if (cur_song.getArtist())
-				$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
-			else
-				$scope.currentSongName = cur_song.getDisplayName();
+			$scope.song.title = cur_song.getTitle();
+			$scope.song.artist = cur_song.getArtist();
+			$scope.song.volume = newState.volume*100;
 			$scope.playing = (newState.playstate === "play");
-			$scope.queue = newState.current_queue.getSongs();
+			$scope.playing = (newState.playstate === "play");
 		});
 	});
 
-	$scope.clickSong = (song) => {
-		ons.notification.alert(
-			{
-				message: song.getDisplayName(),
-				buttonLabels: ["Als Nächstes", "Jetzt", "Abbrechen"],
-				title: "Song Abspielen",
-				cancelable: true,
-				primaryButtonIndex: 0
-			}
-		).then((buttonId) => {
-			if(buttonId == 0)
-				playSongNext(song);
-			else if (buttonId == 1)
-				playSong(song);
-		});
-	};
-
-	$scope.queueRemoveSelected = () => {
-		$scope.queue.forEach((song) => {
-			if (song.selected)
-				mpd.mpd_client.removeSongFromQueueById(song.getId());
-		});
-	};
-
 	$scope.setPlayback = (playing) => {
-		if (playing)
+		if (!playing)
 			mpd.mpd_client.pause();
 		else
 			mpd.mpd_client.play();
+	};
+
+	$scope.setPlaybackPrevious = () => {
+		mpd.mpd_client.previous();
 	};
 
 	$scope.setPlaybackNext = () => {

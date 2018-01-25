@@ -1,47 +1,46 @@
-<ons-page ng-controller="songviewCtl">
+<ons-page ng-controller="songviewCtl as page" ons-init="page.init($event)">
 	<ons-toolbar>
-		<div class="center"	ng-click="myNavigator.popPage()">
+		<div class="center"	ng-click="songview_nav.popPage()">
 			<ons-icon icon="ion-ios-arrow-down"></ons-icon>
 		</div>
 	</ons-toolbar>
-	<div class="songview-image">
-		<img src="media/bass.svg" />
-	</div>
+	<img class="songview-image" src="media/bass.svg" />
 	<div class="songview-progress">
-		<ons-progress-bar value="23"></ons-progress-bar>
+		<ons-progress-bar value="{{page.progress}}"></ons-progress-bar>
 	</div>
 	<div class="songview-progress-numbers">
 		<div class="songview-progress-number-left">
-			<span>2.85</span>
+			<span ng-bind="progress_num" />
 		</div>
 		<div class="songview-progress-number-right">
-			<span>-1.10</span>
+			<span ng-bind="progress_num_left" />
 		</div>
 	</div>
 	<div class="songview-song">
-		<h3>Carousel (KXA Remix)</h3>
-		<h4>Melanie Martines</h4>
+		<h3 ng-bind="song.title" />
+		<h4 ng-bind="song.artist" />
 	</div>
 	<div class="songview-controlls">
 		<div class="songview-controlls-left">
-			<ons-icon size="30px" icon="ion-skip-backward"></ons-icon>
+			<ons-icon size="30px" icon="ion-skip-backward" ng-click="setPlaybackPrevious()"></ons-icon>
 		</div>
 		<div class="songview-controlls-center">
-			<ons-icon size="40px" icon="ion-play"></ons-icon>
+			<ons-icon size="40px" icon="ion-play" ng-show="!playing" ng-click="setPlayback(!playing)"></ons-icon>
+			<ons-icon size="40px" icon="ion-pause" ng-show="playing" ng-click="setPlayback(!playing)"></ons-icon>
 		</div>
 		<div class="songview-controlls-right">
-			<ons-icon size="30px" icon="ion-skip-forward"></ons-icon>
+			<ons-icon size="30px" icon="ion-skip-forward" ng-click="setPlaybackNext()"></ons-icon>
 		</div>
 	</div>
 	<div class="songview-volume">
 	<ons-row>
-		<ons-col width="40px" class="songview-volume-icon">
+		<ons-col width="40px" class="songview-volume-icon" ng-click="setVolumeDown()">
 			<ons-icon icon="md-volume-down"></ons-icon>
 		</ons-col>
 		<ons-col>
-			<ons-range class="songview-volume-range"></ons-range>
+			<ons-range class="songview-volume-range" ng-model="song.volume"></ons-range>
 		</ons-col>
-		<ons-col width="40px" class="songview-volume-icon">
+		<ons-col width="40px" class="songview-volume-icon" ng-click="setVolumeUp()">
 			<ons-icon icon="md-volume-up"></ons-icon>
 		</ons-col>
 	</ons-row>
