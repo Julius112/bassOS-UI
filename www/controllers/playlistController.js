@@ -75,7 +75,7 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 	};
 
 	$scope.setPlayback = (playing) => {
-		if (playing)
+		if (!playing)
 			mpd.mpd_client.pause();
 		else
 			mpd.mpd_client.play();
