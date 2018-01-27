@@ -4,11 +4,15 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 	$scope.song = {
 		title : "loading...",
 		artist : "",
-		volume : "50"
+		volume : "50",
+		time: 1,
+		duration: 1
 	};
 
+	var interval_id;
+
 	/* INIT: When view is pushed */
-	this.init = function(e) {
+	this.init = (e) => {
 			// Ensure the emitter is the current page, not a nested one
 			if (e.target === e.currentTarget) {
 				var state = mpd.mpd_client.getState();
@@ -16,11 +20,27 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 				$scope.$apply(() => {
 					$scope.song.title = cur_song.getTitle();
 					$scope.song.artist = cur_song.getArtist();
+					$scope.song.duration = cur_song.getDuration() * 1000;
 					$scope.song.volume = state.volume;
 					$scope.playing = (state.playstate === "play");
 				});
+				updateSongTime();
+				interval_id = setInterval(() => {
+					if ($scope.playing)
+						updateSongTime();
+				},250);
 			}
 		};
+
+	this.hide = () => {
+		clearInterval(interval_id);
+	}
+
+	var updateSongTime = () => {
+		$scope.$apply(() => {
+			$scope.song.time = Math.round(mpd.mpd_client.getCurrentSongTime() * 1000);
+		});
+	};
 
 	var playSongNext = (song) => {
 		var current_pos = mpd.mpd_client.getCurrentSongQueueIndex();
@@ -38,6 +58,7 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 			$scope.song.title = cur_song.getTitle();
 			$scope.song.artist = cur_song.getArtist();
 			$scope.song.volume = state.volume*100;
+			$scope.song.duration = cur_song.getDuration() * 1000;
 			$scope.playing = (state.playstate === "play");
 		});
 	});
@@ -48,6 +69,7 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 		$scope.$apply(() => {
 			$scope.song.title = cur_song.getTitle();
 			$scope.song.artist = cur_song.getArtist();
+			$scope.song.duration = cur_song.getDuration() * 1000;
 			$scope.song.volume = newState.volume*100;
 			$scope.playing = (newState.playstate === "play");
 			$scope.playing = (newState.playstate === "play");
