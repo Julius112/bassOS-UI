@@ -35,13 +35,13 @@
 	<div class="songview-volume">
 	<ons-row>
 		<ons-col width="40px" class="songview-volume-icon" ng-click="setVolumeDown()">
-			<ons-icon icon="md-volume-down"></ons-icon>
+			<ons-icon size="30px" icon="md-volume-down"></ons-icon>
 		</ons-col>
 		<ons-col>
-			<ons-range class="songview-volume-range" ng-model="song.volume"></ons-range>
+			<ons-range class="songview-volume-range" my-touchend="volumeChange()" ng-model="song.volume"></ons-range>
 		</ons-col>
 		<ons-col width="40px" class="songview-volume-icon" ng-click="setVolumeUp()">
-			<ons-icon icon="md-volume-up"></ons-icon>
+			<ons-icon size="30px" icon="md-volume-up"></ons-icon>
 		</ons-col>
 	</ons-row>
 </ons-page>

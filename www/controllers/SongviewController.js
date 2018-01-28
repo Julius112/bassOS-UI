@@ -21,7 +21,7 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 					$scope.song.title = cur_song.getTitle();
 					$scope.song.artist = cur_song.getArtist();
 					$scope.song.duration = cur_song.getDuration() * 1000;
-					$scope.song.volume = state.volume;
+					$scope.song.volume = state.volume*100;
 					$scope.playing = (state.playstate === "play");
 				});
 				updateSongTime();
@@ -91,4 +91,34 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 		mpd.mpd_client.next();
 	};
 
+	$scope.setVolumeUp = () => {
+		var newVolume = $scope.song.volume + 5;
+		if (newVolume > 100)
+			newVolume = 100;
+		mpd.mpd_client.setVolume(newVolume / 100);
+	};
+
+	$scope.setVolumeDown = () => {
+		var newVolume = $scope.song.volume - 5;
+		if (newVolume < 0)
+			newVolume = 0;
+		mpd.mpd_client.setVolume(newVolume / 100);
+	};
+
+	$scope.volumeChange = () => {
+		if ($scope.song.volume > 100)
+			$scope.song.volume = 100;
+		else if ($scope.song.volume < 0)
+			$scope.song.volume = 0;
+		mpd.mpd_client.setVolume($scope.song.volume / 100);
+	}
+
+}).directive('myTouchend', function() {
+	return function(scope, element, attr) {
+		element.on('touchend', function(event) {
+			scope.$apply(function() {
+				scope.$eval(attr.myTouchend);
+			});
+		});
+	};
 });
