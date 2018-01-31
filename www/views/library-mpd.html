@@ -1,4 +1,4 @@
-<ons-page ng-controller="libraryMpdCtl">
+<ons-page ng-controller="libraryMpdCtl as page" ons-init="page.init($event)">
 	<ons-toolbar>
 		<div class="left"><ons-back-button>Zurück</ons-back-button></div>
 		<div class="center">MPD Mediathek</div>
@@ -14,5 +14,18 @@
 			</div>
 		</ons-list-item>
 	</ons-list>
+	<ons-bottom-toolbar>
+	<ons-toolbar>
+		<div class="left song-preview" ng-click="library_nav.pushPage('views/songview.html', {data: {navigator: library_nav}, animation: 'lift'})" ng-bind="currentSongName">
+		</div>
+		<div class="center song-preview-ctl" ng-click="setPlayback(!playing)">
+			<ons-icon size="20px" icon="ion-play" ng-show="!playing"></ons-icon>
+			<ons-icon size="20px" icon="ion-pause" ng-show="playing"></ons-icon>
+		</div>
+		<div class="right song-preview-ctl" ng-click="setPlaybackNext()">
+			<ons-icon size="20px" icon="ion-skip-forward"></ons-icon>
+		</div>
+	</ons-toolbar>
+	</ons-bottom-toolbar>
 </ons-page>
 

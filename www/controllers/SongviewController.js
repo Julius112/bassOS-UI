@@ -15,6 +15,7 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 	this.init = (e) => {
 			// Ensure the emitter is the current page, not a nested one
 			if (e.target === e.currentTarget) {
+				$scope.page_nav = e.target.data.navigator;
 				var state = mpd.mpd_client.getState();
 				var cur_song = mpd.mpd_client.getCurrentSong();
 				$scope.$apply(() => {
