@@ -1,5 +1,6 @@
 angular.module('bassOS').controller('libraryMpdCtl', function($scope, mpd) {
 	$scope.searchlist = [];
+	$scope.playing = false;
 
 	/*** Feature dropped due to race condition when song is not queued but the old last song is moved to the next song
 	var queue_add_next = (song) => {
@@ -48,6 +49,50 @@ angular.module('bassOS').controller('libraryMpdCtl', function($scope, mpd) {
 				});
 			});
 	};
+
+	/* INIT: When view is pushed */
+	this.init = (e) => {
+		// Ensure the emitter is the current page, not a nested one
+		if (e.target === e.currentTarget) {
+			var state = mpd.mpd_client.getState();
+			var cur_song = mpd.mpd_client.getCurrentSong();
+			$scope.$apply(() => {
+				$scope.currentSongId = state.current_song.id;
+				if (cur_song.getArtist())
+					$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
+				else
+					$scope.currentSongName = cur_song.getDisplayName();
+				$scope.playing = (state.playstate === "play");
+				$scope.queue = state.current_queue.getSongs();
+			});
+		}
+	}
+
+	/* STATE UPDATE */
+	mpd.mpd_client.on('StateChanged', (newState) => {
+		var cur_song = mpd.mpd_client.getCurrentSong();
+		$scope.$apply(() => {
+			$scope.currentSongId = newState.current_song.id;
+			if (cur_song.getArtist())
+				$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
+			else
+				$scope.currentSongName = cur_song.getDisplayName();
+			$scope.playing = (newState.playstate === "play");
+			$scope.queue = newState.current_queue.getSongs();
+		});
+	});
+
+	$scope.setPlayback = (playing) => {
+		if (!playing)
+			mpd.mpd_client.pause();
+		else
+			mpd.mpd_client.play();
+	};
+
+	$scope.setPlaybackNext = () => {
+		mpd.mpd_client.next();
+	};
+
 
 }).directive('myKeyup', function() {
 	return function(scope, element, attr) {

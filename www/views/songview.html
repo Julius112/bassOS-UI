@@ -1,0 +1,47 @@
+<ons-page ng-controller="songviewCtl as page" ons-hide="page.hide()" ons-init="page.init($event)">
+	<ons-toolbar>
+		<div class="center"	ng-click="page_nav.popPage()">
+			<ons-icon icon="ion-ios-arrow-down"></ons-icon>
+		</div>
+	</ons-toolbar>
+	<img class="songview-image" src="media/bass.svg" />
+	<div class="songview-progress">
+		<ons-progress-bar value="{{ 100 * song.time / song.duration }}"></ons-progress-bar>
+	</div>
+	<div class="songview-progress-numbers">
+		<div class="songview-progress-number-left">
+			<span>{{ song.time | date:'m:ss' }}</span>
+		</div>
+		<div class="songview-progress-number-right">
+			<span>{{ song.duration - song.time | date:'-m:ss' }}</span>
+		</div>
+	</div>
+	<div class="songview-song">
+		<h3 ng-bind="song.title" />
+		<h4 ng-bind="song.artist" />
+	</div>
+	<div class="songview-controlls">
+		<div class="songview-controlls-left">
+			<ons-icon size="30px" icon="ion-skip-backward" ng-click="setPlaybackPrevious()"></ons-icon>
+		</div>
+		<div class="songview-controlls-center">
+			<ons-icon size="40px" icon="ion-play" ng-show="!playing" ng-click="setPlayback(!playing)"></ons-icon>
+			<ons-icon size="40px" icon="ion-pause" ng-show="playing" ng-click="setPlayback(!playing)"></ons-icon>
+		</div>
+		<div class="songview-controlls-right">
+			<ons-icon size="30px" icon="ion-skip-forward" ng-click="setPlaybackNext()"></ons-icon>
+		</div>
+	</div>
+	<div class="songview-volume">
+	<ons-row>
+		<ons-col width="40px" class="songview-volume-icon" ng-click="setVolumeDown()">
+			<ons-icon size="30px" icon="md-volume-down"></ons-icon>
+		</ons-col>
+		<ons-col>
+			<ons-range class="songview-volume-range" my-touchend="volumeChange()" ng-model="song.volume"></ons-range>
+		</ons-col>
+		<ons-col width="40px" class="songview-volume-icon" ng-click="setVolumeUp()">
+			<ons-icon size="30px" icon="md-volume-up"></ons-icon>
+		</ons-col>
+	</ons-row>
+</ons-page>

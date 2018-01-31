@@ -30,7 +30,93 @@ h4 {
 }
 
 .song-preview-ctl {
-  width: 12%;
-  text-align: center;
+	width: 12%;
+	text-align: center;
 	margin-left: 1%;
+}
+
+.songview-image {
+	height: 30%;
+	width: 100%;
+	margin: 6% auto;
+}
+
+.songview-progress {
+	width: 80%;
+	height: 3px;
+	margin: 0px auto;
+	background-color: #e0e0e5;
+}
+
+.songview-progress-numbers {
+	margin: 2% auto;
+	width: 80%;
+}
+
+.songview-progress-number-left {
+	width: 50%;
+	text-align: left;
+	float: left;
+}
+
+.songview-progress-number-right {
+	width: 50%;
+	text-align: right;
+	float: left;
+}
+
+.songview-song {
+	margin: 10% auto 5% auto;
+	width: 80%;
+	height: 20%;
+	overflow: hidden;
+}
+
+.songview-song h3 {
+	text-align: center;
+}
+
+.songview-song h4 {
+	text-align: center;
+	font-size: 14px;
+}
+
+.songview-controlls {
+	margin: 5% auto;
+	width: 50%;
+	height: 40px;
+}
+
+.songview-controlls-left {
+	width: 30%;
+	text-align: left;
+	float: left;
+	padding: 5px 0;
+}
+
+.songview-controlls-center {
+	width: 40%;
+	text-align: center;
+	float: left;
+}
+
+.songview-controlls-right {
+	width: 30%;
+	text-align: right;
+	float: left;
+	padding: 5px 0;
+}
+
+.songview-volume {
+	margin: 2% auto;
+	width: 95%;
+}
+
+.songview-volume-icon {
+	text-align: center;
+	line-height: 31px;
+}
+
+.songview-volume-range {
+	width: 100%;
 }
