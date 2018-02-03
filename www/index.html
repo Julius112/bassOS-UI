@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-title" content="BassOS">
+	<meta name="apple-mobile-web-app-title" content="BassOS-dev">
 	<meta name="apple-mobile-web-app-status-bar-style" content="white">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -36,18 +36,28 @@
 <script src="controllers/SongviewController.js"></script>
 <!-- include services -->
 <script src="services/mpd.js"></script>
-<!-- include views -->
-<div ng-include="'views/library.html'"></div>
-<div ng-include="'views/settings.html'"></div>
-<div ng-include="'views/playlist.html'"></div>
 
 	<ons-page ng-controller="sseCtl">
 		<ons-toolbar>
 			<div class="center">
-				BassOS 10
+				BassOS 9
 			</div>
 		</ons-toolbar>
-		<ons-tabbar>
+		<ons-toolbar ng-if="web_view">
+			<div class="center">
+				BassOS Installation
+			</div>
+		</ons-toolbar>
+		<!-- Install instructions -->
+		<div ng-if="web_view" class="install">
+			<span>Zum installieren der BassOS App bitte auf </span>
+			<ons-icon size="30px" icon="ion-ios-upload-outline"></ons-icon>
+			<span>drücken und dann </span>
+			<ons-icon size="30px" icon="ion-ios-plus"></ons-icon>
+			<span>(zum Homescreen hinzufügen)</span>
+		</div>
+		<!-- Normal app view -->
+		<ons-tabbar ng-if="!web_view">
 			<ons-tab label="Mediathek" icon="ion-ios-list" page="views/library.html">
 			</ons-tab>
 			<ons-tab label="Playlist" icon="ion-ios-list" active="true" page="views/playlist.html">
