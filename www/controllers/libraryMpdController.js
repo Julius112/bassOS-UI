@@ -89,6 +89,10 @@ angular.module('bassOS').controller('libraryMpdCtl', function($scope, mpd) {
 			mpd.mpd_client.play();
 	};
 
+	$scope.update = () => {
+		mpd.mpd_client.updateDatabase();
+	};
+
 	$scope.setPlaybackNext = () => {
 		mpd.mpd_client.next();
 	};
