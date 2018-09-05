@@ -3,42 +3,79 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 	$scope.playing = false;
 
 	var playSongNext = (song) => {
-		var current_pos = mpd.mpd_client.getCurrentSongQueueIndex();
+		var current_pos = mpd.mopidy.getCurrentSongQueueIndex();
 		if (song.getQueuePosition() < current_pos)
-			mpd.mpd_client.moveSongOnQueueById(song.getId(), current_pos);
+			mpd.mopidy.moveSongOnQueueById(song.getId(), current_pos);
 		else
-			mpd.mpd_client.moveSongOnQueueById(song.getId(), current_pos + 1);
+			mpd.mopidy.moveSongOnQueueById(song.getId(), current_pos + 1);
 	};
 
 	var playSong = (song) => {
-		mpd.mpd_client.playById(song.getId());
+		mpd.mopidy.playById(song.getId());
 	};
 
 	/* MPD CONNECT */
-	mpd.mpd_client.on('Connect', () => {
-		var state = mpd.mpd_client.getState();
-		var cur_song = mpd.mpd_client.getCurrentSong();
-		$scope.$apply(() => {
-			$scope.currentSongId = state.current_song.id;
-			if (cur_song.getArtist())
-				$scope.currentSongName = " " + cur_song.getTitle() + " - " + cur_song.getArtist();
-			else
-				$scope.currentSongName = cur_song.getDisplayName();
-			$scope.playing = (state.playstate === "play");
-			$scope.queue = state.current_queue.getSongs();
-		});
+	mpd.mopidy.on('state:online', () => {
+    var cur_song;
+    mpd.mopidy.playback.getCurrentTrack()
+    .then((track) => {
+      cur_song = track || {title: "Not Available"};
+      $scope.$apply(() => {
+			  $scope.currentSongId = cur_song.tlid;
+        if (Array.isArray(cur_song.artists))
+			    $scope.currentSongName = " " + cur_song.name + " - " + cur_song.artists.map(artist => artist.name).join(', ');
+			  else
+			    $scope.currentSongName = cur_song.name;
+      });
+    })
+    mpd.mopidy.playback.getState()
+    .then((state) => {
+      $scope.$apply(() => {
+		    $scope.playing = (state === "PLAYING");
+      });
+    });
+    mpd.mopidy.tracklist.getTracks()
+    .then((tracks) => {
+      $scope.$apply(() => {
+		    $scope.queue = tracks;
+      });
+    });
 	});
 
 	/* QUEUE UPDATE */
-	mpd.mpd_client.on('QueueChanged', (newQueue) => {
-		$scope.$apply(() => {
-			$scope.queue = newQueue.getSongs();
+	mpd.mopidy.on('event:tracklistChanged', () => {
+    mpd.mopidy.tracklist.getTracks()
+    .then((tracks) => {
+		  $scope.$apply(() => {
+		    $scope.queue = tracks;
+      });
 		});
 	});
 
+	mpd.mopidy.on('event:playbackStateChanged', () => {
+    var cur_song;
+    mpd.mopidy.playback.getState()
+    .then((state) => {
+		  $scope.$apply(() => {
+		    $scope.playing = (state === "PLAYING");
+      });
+    });
+    mpd.mopidy.playback.getCurrentTrack()
+    .then((track) => {
+      cur_song = track;
+		  $scope.$apply(() => {
+        if (Array.isArray(cur_song.artists))
+			    $scope.currentSongName = " " + cur_song.name + " - " + cur_song.artists.map(artist => artist.name).join(', ');
+		    else
+			    $scope.currentSongName = cur_song.name;
+      });
+    });
+	});
+
+
 	/* STATE UPDATE */
-	mpd.mpd_client.on('StateChanged', (newState) => {
-		var cur_song = mpd.mpd_client.getCurrentSong();
+	mpd.mopidy.on('StateChanged', (newState) => {
+		var cur_song = mpd.mopidy.getCurrentSong();
 		$scope.$apply(() => {
 			$scope.currentSongId = newState.current_song.id;
 			if (cur_song.getArtist())
@@ -68,21 +105,31 @@ angular.module('bassOS').controller('playlistCtl', function($scope, mpd) {
 	};
 
 	$scope.queueRemoveSelected = () => {
+    var remove_list = [];
 		$scope.queue.forEach((song) => {
 			if (song.selected)
-				mpd.mpd_client.removeSongFromQueueById(song.getId());
+        remove_list.append(song.tlid);
 		});
+		mpd.mopidy.remove({'tlid': remove_list});
 	};
 
 	$scope.setPlayback = (playing) => {
 		if (!playing)
-			mpd.mpd_client.pause();
+			mpd.mopidy.playback.pause();
 		else
-			mpd.mpd_client.play();
+			mpd.mopidy.playback.play();
 	};
 
 	$scope.setPlaybackNext = () => {
-		mpd.mpd_client.next();
+		mpd.mopidy.playback.next();
 	};
+
+  $scope.allArtists = (song, max_len) => {
+    var artists = song.artists.map(artist => artist.name).join(', ');
+    if (typeof max_len === "number")
+      return (artists.length > max_len) ? artists.substr(0, max_len - 1) + '...' : artists;
+    else
+      return artists;
+  };
 
 });

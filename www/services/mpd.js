@@ -1,5 +1,9 @@
 /* Create angular service */
 var MpdService = angular.module('MpdService', [])
 .service('mpd', function () {
-    this.mpd_client = MPD(8800);
+  this.mopidy = new Mopidy({
+    webSocketUrl: "ws://"+window.location.hostname+":6680/mopidy/ws/",
+    callingConvention: "by-position-or-by-name"
+  });
+  //this.mopidy.on(console.log.bind(console));
 });

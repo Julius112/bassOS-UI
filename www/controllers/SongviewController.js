@@ -15,16 +15,32 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 	this.init = (e) => {
 			// Ensure the emitter is the current page, not a nested one
 			if (e.target === e.currentTarget) {
+				var cur_song;
 				$scope.page_nav = e.target.data.navigator;
-				var state = mpd.mpd_client.getState();
-				var cur_song = mpd.mpd_client.getCurrentSong();
-				$scope.$apply(() => {
-					$scope.song.title = cur_song.getTitle();
-					$scope.song.artist = cur_song.getArtist();
-					$scope.song.duration = cur_song.getDuration() * 1000;
-					$scope.song.volume = state.volume*100;
-					$scope.playing = (state.playstate === "play");
-				});
+        mpd.mopidy.mixer.getVolume()
+        .then((vol) => {
+				  $scope.$apply(() => {
+				  	$scope.song.volume = vol || 50;
+				  });
+        })
+        mpd.mopidy.playback.getState()
+        .then((state) => {
+				  $scope.$apply(() => {
+			      $scope.playing = (state === "PLAYING");
+          });
+        });
+        mpd.mopidy.playback.getCurrentTrack()
+        .then((track) => {
+          cur_song = track || {title: "Not Available"};
+				  $scope.$apply(() => {
+					  $scope.song.title = cur_song.name;
+            if (Array.isArray(cur_song.artists))
+					    $scope.song.artist = cur_song.artists.map(artist => artist.name).join(', ');
+            else
+              $scope.song.artist = "";
+					  $scope.song.duration = Math.round(cur_song.length || 0);
+          });
+        })
 				updateSongTime();
 				interval_id = setInterval(() => {
 					if ($scope.playing)
@@ -38,34 +54,57 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 	}
 
 	var updateSongTime = () => {
-		$scope.$apply(() => {
-			$scope.song.time = Math.round(mpd.mpd_client.getCurrentSongTime() * 1000);
-		});
-	};
-
-	var playSongNext = (song) => {
-		var current_pos = mpd.mpd_client.getCurrentSongQueueIndex();
-		if (song.getQueuePosition() < current_pos)
-			mpd.mpd_client.moveSongOnQueueById(song.getId(), current_pos);
-		else
-			mpd.mpd_client.moveSongOnQueueById(song.getId(), current_pos + 1);
+    mpd.mopidy.playback.getTimePosition()
+    .then((pos) => {
+      $scope.$apply(() => {
+	  		$scope.song.time = Math.round(pos || 0);
+	  	});
+    });
 	};
 
 	/* MPD CONNECT */
-	mpd.mpd_client.on('Connect', () => {
-		var state = mpd.mpd_client.getState();
-		var cur_song = mpd.mpd_client.getCurrentSong();
-		$scope.$apply(() => {
-			$scope.song.title = cur_song.getTitle();
-			$scope.song.artist = cur_song.getArtist();
-			$scope.song.volume = state.volume*100;
-			$scope.song.duration = cur_song.getDuration() * 1000;
-			$scope.playing = (state.playstate === "play");
-		});
+	mpd.mopidy.on('state:online', () => {
+    mpd.mopidy.mixer.getVolume()
+    .then((vol) => {
+		  $scope.$apply(() => {
+		  	$scope.song.volume = vol || 50;
+		  });
+    })
+    mpd.mopidy.playback.getState()
+    .then((state) => {
+		  $scope.$apply(() => {
+		    $scope.playing = (state === "PLAYING");
+      });
+    });
+    mpd.mopidy.playback.getCurrentTrack()
+    .then((track) => {
+      cur_song = track || {title: "Not Available"};
+		  $scope.$apply(() => {
+			  $scope.song.title = cur_song.name;
+        if (Array.isArray(cur_song.artists))
+			    $scope.song.artist = cur_song.artists.map(artist => artist.name).join(', ');
+        else
+          $scope.song.artist = "";
+			  $scope.song.duration = Math.round(cur_song.length || 0);
+      });
+    })
+	});
+
+  /* VOLUME UPDATE */
+	mpd.mopidy.on('event:volumeChanged', () => {
+    var mixer_vol;
+    mpd.mopidy.mixer.getVolume()
+    .then((vol) => {
+      mixer_vol = vol || 50;
+    })
+		.then($scope.$apply(() => {
+		  	$scope.song.volume = mixer_vol;
+		  })
+    );
 	});
 
 	/* STATE UPDATE */
-	mpd.mpd_client.on('StateChanged', (newState) => {
+/*	mpd.mpd_client.on('StateChanged', (newState) => {
 		var cur_song = mpd.mpd_client.getCurrentSong();
 		$scope.$apply(() => {
 			$scope.song.title = cur_song.getTitle();
@@ -76,34 +115,34 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 			$scope.playing = (newState.playstate === "play");
 		});
 	});
-
+*/
 	$scope.setPlayback = (playing) => {
 		if (!playing)
-			mpd.mpd_client.pause();
+			mpd.mopidy.playback.pause();
 		else
-			mpd.mpd_client.play();
+			mpd.mopidy.playback.play();
 	};
 
 	$scope.setPlaybackPrevious = () => {
-		mpd.mpd_client.previous();
+		mpd.mopidy.playback.previous();
 	};
 
 	$scope.setPlaybackNext = () => {
-		mpd.mpd_client.next();
+	  mpd.mopidy.playback.next();
 	};
 
 	$scope.setVolumeUp = () => {
 		var newVolume = $scope.song.volume + 5;
 		if (newVolume > 100)
 			newVolume = 100;
-		mpd.mpd_client.setVolume(newVolume / 100);
+		mpd.mopidy.mixer.setVolume(newVolume / 100);
 	};
 
 	$scope.setVolumeDown = () => {
 		var newVolume = $scope.song.volume - 5;
 		if (newVolume < 0)
 			newVolume = 0;
-		mpd.mpd_client.setVolume(newVolume / 100);
+		mpd.mopidy.mixer.setVolume(newVolume / 100);
 	};
 
 	$scope.volumeChange = () => {
@@ -111,7 +150,7 @@ angular.module('bassOS').controller('songviewCtl', function($scope, mpd) {
 			$scope.song.volume = 100;
 		else if ($scope.song.volume < 0)
 			$scope.song.volume = 0;
-		mpd.mpd_client.setVolume($scope.song.volume / 100);
+		mpd.mopidy.mixer.setVolume($scope.song.volume / 100);
 	}
 
 }).directive('myTouchend', function() {

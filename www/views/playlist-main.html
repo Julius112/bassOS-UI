@@ -8,13 +8,14 @@
 		</div>
 	</ons-toolbar>
 	<ons-list>
-		<ons-list-item modifier="longdivider" ng-repeat="song in queue" ng-class="{playing: song.getId() == currentSongId}">
+		<ons-list-item modifier="longdivider" ng-repeat="song in queue" ng-class="{playing: song.tlid == currentSongId}">
 			<div class="left">
 				<ons-checkbox ng-model="song.selected"></ons-checkbox>
 			</div>
 			<div class="center" ng-click="clickSong(song)">
-				<span class="list-item__title" ng-bind="song.getTitle()"></span>
-				<span class="list-item__subtitle" ng-bind="song.getArtist()"></span>
+				<span class="list-item__title" ng-bind="song.name"></span>
+        <!-- TODO show all artist -->
+				<span class="list-item__subtitle" ng-bind="allArtists(song, 30)"></span>
 			</div>
 			<label class="right">
 				<ons-icon icon="ion-drag" class="list-item__icon"></ons-icon>
